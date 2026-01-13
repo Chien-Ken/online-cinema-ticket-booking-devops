@@ -2,9 +2,11 @@ name: Java CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
@@ -23,6 +25,3 @@ jobs:
       - name: Build with Maven
         working-directory: Login
         run: mvn clean package -DskipTests
-	
-      	
-        
