@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .container {
+    text-align: center;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+h1 {
+    color: #333;
+}
+
+p {
+    color: #666;
+}
+
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+        </style>
+</head>
+<body>
+<div class="container">
+    <h1>Payment Successful!</h1>
+    <p>Thank you for your purchase.</p>
+    <p>Hope that you enjoy the film with ease </p>
+    <p>Go to the movie home <a th:href="@{/user-page}">here</a>.</p>
+    <a href="https://paytm.com/movies/lucknow">
+        <button class="btn" >Continnue shopping</button>
+    </a>
+</div>
+</body>
+</html>

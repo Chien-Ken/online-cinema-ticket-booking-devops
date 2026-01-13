@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Confirmation</title>
+    <script>
+        function handlePaymentSelection() {
+            // Get selected payment method
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            // If 'Pay by Cash' is selected, show alert
+            if (paymentMethod === 'cash') {
+                alert("Please go to the entry of the theater to pay by cash. Your booking is successful!");
+            }else if (paymentMethod === 'card') {
+            const paymentUrl = `/makePayment`;
+                window.location.href = paymentUrl;
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* Make space for fixed navbar */
+        }
+
+        /* Fixed Header */
+        .header {
+            background-color: #FF955A;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            color: white;
+        }
+
+        .nav-container {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .navbar-link {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-link:hover {
+            background-color: #ff5900;
+        }
+
+        /* Main content container */
+        .container {
+            max-width: 80%;
+            margin: 100px auto; /* Adjusted margin-top for space */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Fixed Navigation Bar (same as ticket selection page) -->
+<div class="header">
+    <h1>Ticket Selection</h1>
+    <span sec:authorize="isAuthenticated" class="nav-container">
+        <a th:href="@{/logout}" class="navbar-link">Logout</a>
+    </span>
+    <div class="nav-container">
+        <a th:href="@{/user-page}" class="navbar-link">Home</a>
+    </div>
+    <div class="nav-container">
+        <a th:href="@{/allTheaters}" class="navbar-link">Theaters</a>
+    </div>
+    <div class="nav-container">
+        <a th:href="@{/showAllCategory}" class="navbar-link">Movies</a>
+    </div>
+</div>
+
+<!-- Ticket Confirmation -->
+<div class="container">
+    <h1>Ticket Confirmation</h1>
+    <h2>Your total cost is $[[${totalCost}]]</h2>
+
+    <form id="paymentForm">
+        <label>
+            <input type="radio" name="paymentMethod" value="card" checked> Pay by Card
+        </label><br>
+        <label>
+            <input type="radio" name="paymentMethod" value="cash"> Pay by Cash
+        </label><br><br>
+
+        <!-- Button to trigger the payment method selection -->
+        <button type="button" onclick="handlePaymentSelection()">Confirm Payment</button>
+    </form>
+</div>
+
+</body>
+</html>
