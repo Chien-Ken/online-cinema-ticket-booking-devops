@@ -21,7 +21,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        working-directory: Login123
+        working-directory: Login
         run: mvn clean package -DskipTests
 	
       	
