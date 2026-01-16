@@ -35,7 +35,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t chienpm1/se2-app:latest .
+        working-directory: Login
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/se2-app:latest .
 
       - name: Push Docker image
-        run: docker push chienpm1/se2-app:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/se2-app:latest
