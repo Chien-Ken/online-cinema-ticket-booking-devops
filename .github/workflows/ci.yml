@@ -1,20 +1,16 @@
-name: Java CI/CD
+name: Java CI
 
 on:
   push:
     branches:
-      - feature/**
-      - develop
       - main
   pull_request:
     branches:
-      - develop
+      - develop 
       - main
 
 jobs:
-  # ================= CI =================
-  ci:
-    name: Build & Test
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,36 +27,17 @@ jobs:
         working-directory: Login
         run: mvn clean package -DskipTests
 
-  # ================= CD =================
-  cd:
-    name: Deploy
-    needs: ci
-    runs-on: self-hosted
 
-    # 🔐 CHỈ deploy khi push vào main
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-
+      # ===== DOCKER CI =====
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build & Push Docker image
+      - name: Build Docker image
         working-directory: Login
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/se2-app:latest .
-          docker push ${{ secrets.DOCKER_USERNAME }}/se2-app:latest
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/se2-app:latest .
 
-      - name: Deploy with Docker Compose
-        working-directory: Login
-        run: |
-          docker compose down
-          docker compose pull
-          docker compose up -d
-
-   
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/se2-app:latest
